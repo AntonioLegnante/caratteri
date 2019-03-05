@@ -8,8 +8,7 @@ int main ()
 
     printf("conta i caratteri del file\n");
     
-    while((a = getchar()) != EOF)
-        contatore++;
+    while((a = getchar()) != EOF)    contatore++;
 
     printf("%d", contatore);
     

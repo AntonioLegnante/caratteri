@@ -10,8 +10,7 @@ int main ()
 
     while((a = getchar()) != EOF)
     {
-        if(a == '\n')
-            contatore++;
+        if(a == '\n')    contatore++;
     }
 
     printf("sono presenti %d righe nel file", contatore);

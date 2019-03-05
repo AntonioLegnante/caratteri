@@ -8,8 +8,7 @@ int main ()
     
     printf("lettura del file\n");
     
-    while((a = getchar())!= EOF) 
-        putchar(a);
+    while((a = getchar())!= EOF)    putchar(a);
 
     return 0;
 }

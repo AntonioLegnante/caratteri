@@ -10,7 +10,7 @@ int main ()
 
     while((a = getchar()) != EOF)
     {
-        if(a >= 48 && a <= 57)
+        if(a >= '0' && a <= '9')
         {
             i = a - '0';
             contatorenum[i]++;

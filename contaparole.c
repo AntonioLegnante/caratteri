@@ -8,9 +8,9 @@
 
 int main ()
 {
-  enum stato {NORMALE, CONTA};
-  int a, contatorerighe = 0, contatorecar = 0, contaparole = 0;
-  enum stato stato = NORMALE;
+  enum stato {NORMALE, CONTA, START};
+  int a, contatorerighe = 1, contatorecar = 0, contaparole = 0;
+  enum stato stato = START;
 
   /*enum stato, tipologia di variabile*/
   
@@ -20,7 +20,17 @@ int main ()
 
       if(a == '\n')    contatorerighe++;
 
-      if(stato == NORMALE)
+      if(stato == START)
+      {
+          if(a == ' ' || a == '\n' || a == '\t')    stato = CONTA;
+          else
+          {
+              stato = NORMALE;
+              contaparole++;
+          }
+      }
+
+      else if(stato == NORMALE)
       {
           if(a == ' ' || a == '\n' || a == '\t')    
           {

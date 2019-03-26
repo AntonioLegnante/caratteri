@@ -1,24 +1,52 @@
-/*elimina commenti*/
+/*stampa parole*/
 
+/* stato START a == '\n' || a == '\t' || a == ' '  NULL
+               a == altri caratteri                stampa a
+                                                   stato = NORMALE
+
+   stato NORMALE a == ' ' || a == '\t' || a == ' '   vai a capo
+                                                     stato = STAMPA
+                 a == altri caratteri                stampa a
+
+   stato STAMPA  a == qualsiasi cosa                stampa a
+                                                    stato = NORMALE
+*/
 #include <stdio.h>
 
 int main ()
 {
-  enum stato {normale, nuovostato};
+  enum stato {NORMALE, STAMPA, START};
   char a;
-  enum stato stato = normale;
+  enum stato stato = START;
 
   while((a = getchar()) != EOF)
   {
-      if(stato == normale)
+      if(stato == START)
       {
-          if(a == ' ')  stato = nuovostato;
+          if(a == '\n' || a == '\t' || a == ' ')    ;
+          else    
+          {
+              putchar(a);
+              stato = NORMALE;
+          }
+ 
+             
+      }
+
+      else if(stato == NORMALE)
+      {
+          if(a == ' ' || a == '\t' || a == ' ') 
+          {
+              putchar('\n');
+              stato = STAMPA;
+          }
           else    putchar(a);
       }
-      if(stato == nuovostato)
+      
+      else if(stato == STAMPA)
       {    
-          putchar('\n');
-          stato = normale;
+          putchar(a);
+          stato = NORMALE;
       }
       
           

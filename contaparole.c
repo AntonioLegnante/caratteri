@@ -1,7 +1,13 @@
 /*conta parole*/
-/*stato NORMALE a == ' ' || a == '\n' || a == '\t'  contaparole++
-                                                    stato = CONTA
-                a == altri caratteri                NULL
+
+/*stato START  a == ' ' || a == '\n' || a == '\t'  stato CONTA
+               a == altri caratteri                contaparole++
+                                                   stato = NORMALE
+
+  stato NORMALE a == ' ' || a == '\n' || a == '\t'   contaparole++
+                                                     stato = CONTA
+                a == altri caratteri                 NULL
+
   stato CONTA   a == altri caratteri                stato = NORMALE */      
 
 #include <stdio.h>

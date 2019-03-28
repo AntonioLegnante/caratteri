@@ -1,6 +1,6 @@
 /*stampa parole*/
 
-/* stato START a == '\n' || a == '\t' || a == ' '  NULL
+/* stato START a == '\n' || a == '\t' || a == ' '  stato = STAMPA
                a == altri caratteri                stampa a
                                                    stato = NORMALE
 
@@ -23,14 +23,13 @@ int main ()
   {
       if(stato == START)
       {
-          if(a == '\n' || a == '\t' || a == ' ')    ;
-          else    
+          if(a == '\n' || a == '\t' || a == ' ')    stato = STAMPA;
+          else 
           {
               putchar(a);
               stato = NORMALE;
           }
  
-             
       }
 
       else if(stato == NORMALE)

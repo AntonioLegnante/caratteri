@@ -1,43 +1,50 @@
-/*elimina commenti*/    
-/* stato NORMALE           a = "               stato SCRORRI
-                                               stampa a
-                           a = /               stato ASTERISCO
-                           a = '               stato VIRGOLETTA
-                                               stampa a 
-                           a = altri caratteri stato stampa a
+/* stato NORMALE       a = "     stato = SCORRI
+                                 stampa a
+                       a = /     stato ASTERISCO
+                       a = '     stato VIRGOLETTA
+                                 stampa a
+                       a =       altro stampa a
+   
+   stato SCORRI        a = "     stato = NORMALE
+                                 stampa a
+                       a = \     stampa a
+                                 stato = CONTROLLO
+                                 controllo = 1
+                       a = altro stampa a
+ 
+   stato VIRGOLETTA    a = '     stampa a
+                                 stato = NORMALE
+                       a = \     stampa a
+                                 stato CONTROLLO
+                                 controllo = 2
+                       a = altro stampa a
+  
+   stato ASTERISCO     a = *     stato = ELIMINA
+                       a = altro stampa /
+                                 stampa a
+                                 stato = NORMALE
 
-   stato SCORRI            a = "               stato NORMALE
-                         stampa a 
-                           a = altri caratteri stampa a
+   stato ELIMINA       a = *     stato = FINECOMMENTO
+                     
+   stato FINECOMMENTO  a = /     stato = NORMALE
+                       a = altro stato = ELIMINA
 
-   stato VIRGOLETTA
-                           a = /               stato STAMPA_VIRGOLETTA
-                                               stampa a
-                           a = *               stato NORMALE
-                                               stampa a
-                           a = altri caratteri stampa a
+   stato CONTROLLO     a = tutto stampa a
+                                 controllo = 1 stato = SCORRI
+                                 controllo = 2 stato = VIRGOLETTA*/ 
 
-   stato STAMPA_VIRGOLETTA a = '               stampa a
-                                               stato NORMALE
-
-   stato ASTERISCO         a = *               stato elimina
-                           a = altri caratteri stampa /
-                                               stampa a 
-                                               stato NORMALE
-   stato ELIMINA           a = *               stato FINECOMMENTO
-
-   stato FINECOMMENTO      a = /               stato = NORMALE
-                           a = altri caratteri stato = ELIMINA*/
 #include <stdio.h> 
 
 int main ()
 {
-  enum stato {NORMALE, ASTERISCO, ELIMINA, FINECOMMENTO, SCORRI, VIRGOLETTA, STAMPA_VIRGOLETTA};
+  enum stato {NORMALE, ASTERISCO, ELIMINA, FINECOMMENTO, SCORRI, VIRGOLETTA, CONTROLLO};
   char a;
+  int controllo;
   enum stato stato = NORMALE;
 
   while((a = getchar()) != EOF)
   {
+
       if(stato == NORMALE)
       {
           if(a == '"')  
@@ -45,6 +52,7 @@ int main ()
               stato = SCORRI;
               putchar(a);
           }
+              
           else if(a == '/')  stato = ASTERISCO;
           else if(a == '\'')  
           {
@@ -61,30 +69,32 @@ int main ()
               stato = NORMALE;
               putchar(a);
           }
+          else if(a == '\\')
+          {
+              putchar(a);
+              stato = CONTROLLO;
+              controllo = 1;
+          }
+
           else    putchar(a);
       }
       else if(stato == VIRGOLETTA)
-      { 
-          if(a == '/')
-          {
-              stato = STAMPA_VIRGOLETTA;
-              putchar(a);
-          }
-          else if(a == '*')
-          {
-              stato = NORMALE;
-              putchar(a);
-          }
-          else    putchar(a);
-      } 
-      else if(stato == STAMPA_VIRGOLETTA)
-      {
+      {    
           if(a == '\'')
           {
               putchar(a);
               stato = NORMALE;
-          } 
-      }
+          }
+  
+          else if(a == '\\')
+          {
+              putchar(a);
+              stato = CONTROLLO;
+              controllo = 2;
+          }
+          else    putchar(a);
+      } 
+      
       else if(stato == ASTERISCO)
       {    
           if(a == '*')  stato = ELIMINA;
@@ -104,11 +114,19 @@ int main ()
       else if(stato == FINECOMMENTO)
       {
           if(a == '/')   stato = NORMALE;
+    
           else    stato = ELIMINA;
+      }
+      
+      else if(stato == CONTROLLO)
+      {
+          putchar(a);
+
+          if(controllo == 1)    stato = SCORRI;
+          else    stato = VIRGOLETTA;   
       }
     
 
   }
   return 0;
 }
-      
